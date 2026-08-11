@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 Set up dotclaude in this project with one governing principle: **install nothing without evidence and consent.** Every rule, hook, agent, and skill must be justified by something found in the codebase or explicitly requested by the user. When in doubt, leave it out — the user can always add more later; unused config costs tokens and trust forever.
 
-`CLAUDE.md` must be at the project root (`./CLAUDE.md`), NOT inside `.claude/`. All other config files live inside `.claude/`.
+`CLAUDE.md` for this project goes at the project root (`./CLAUDE.md`), committed so the team shares it; all other config lives inside `.claude/`. Claude reads and layers other scopes too: `~/.claude/CLAUDE.md` (your personal, cross-project preferences), `CLAUDE.local.md` (gitignored personal overrides for this project), and nested `CLAUDE.md` in subdirectories (monorepo packages). Route team-shared instructions to the committed root file, personal ones to the home or `.local` file.
 
 Two modes, decided by what exists:
 - **Fresh**: no `.claude/` content yet (whether the user will install from this plugin or has nothing at all).

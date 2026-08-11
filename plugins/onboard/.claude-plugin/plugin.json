@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "onboard",
+  "version": "1.0.0",
+  "description": "Get oriented in an unfamiliar codebase fast: an Explore-subagent tour from overview down to architecture, data models, auth, conventions, and a glossary, without flooding your main context.",
+  "author": {
+    "name": "poshan0126"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/poshan0126/dotclaude",
+  "repository": "https://github.com/poshan0126/dotclaude",
+  "keywords": [
+    "onboarding",
+    "codebase",
+    "explore"
+  ]
+}

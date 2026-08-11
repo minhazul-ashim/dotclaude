@@ -33,7 +33,7 @@ If you only want one or two pieces instead of the full kit, install them individ
 /plugin install ship@dotclaude
 ```
 
-Full plugin list: `code-reviewer`, `silent-failure-hunter`, `pr-test-analyzer`, `security-reviewer`, `performance-reviewer`, `doc-reviewer`, `frontend-designer`, `safety-hooks`, `setupdotclaude`, `catchup`, `claude-md`, `fix-issue`, `debug-fix`, `ship`, `pr-review`, `tdd`, `explain`, `refactor`, `test-writer`, `context-budget`.
+Full plugin list: `code-reviewer`, `silent-failure-hunter`, `pr-test-analyzer`, `security-reviewer`, `performance-reviewer`, `doc-reviewer`, `frontend-designer`, `safety-hooks`, `setupdotclaude`, `catchup`, `claude-md`, `fix-issue`, `debug-fix`, `ship`, `pr-review`, `tdd`, `explain`, `refactor`, `test-writer`, `context-budget`, `onboard`, `spec`.
 
 The `safety-hooks` plugin packages the four PreToolUse guards (dangerous commands, secret scanning, protected files, build artifacts) so you get deterministic guardrails without copying any files.
 
@@ -82,6 +82,7 @@ Reload Claude Code, then run `/setupdotclaude`. It's the same skill as Option 1,
 - `rules/security.md`. Add paths specific to your project's sensitive areas, beyond the defaults.
 - `CLAUDE.md`. Architectural decisions, domain knowledge, workflow quirks unique to your project.
 - `CLAUDE.local.md`. Personal preferences (gitignored). Rename the `.example` file to start.
+- `~/.claude/CLAUDE.md`. Global preferences applied across *all* your projects (personal, never committed). Project `CLAUDE.md` and any nested `CLAUDE.md` in subdirectories layer on top of it.
 - `hooks/format-on-save.sh`. Auto-detects Biome, Prettier, Ruff, Black, rustfmt, and gofmt. If your formatter isn't covered, add a detection block to the script.
 
 The defaults are foundations. Your edits on top are what make Claude effective for *your* project.
@@ -97,6 +98,8 @@ When to re-run `/setupdotclaude`:
 - After a big restructuring that moved source or test directories (path-scoped rule globs go stale).
 
 Re-runs are cheap: on an existing `.claude/` the skill runs as a gap analysis and only proposes deltas — it never re-installs the world.
+
+**Cache-safe by design:** every dotclaude plugin ships only skills, agents, rules, and hooks — no MCP servers — so enabling or disabling them never invalidates Claude Code's prompt cache. Apply plugin changes with `/reload-plugins` or a new session (the first turn after a reload is uncached, then it settles).
 
 ## Skills (slash commands)
 
@@ -116,6 +119,8 @@ Skills are invoked with `/name` in your Claude Code session. All except `/test-w
 | `/refactor` | `[file, function, or pattern \| --diff]` | Safe refactoring with tests as a safety net. Writes tests first if none exist, plans transformations, makes small testable steps, and verifies after each one. Never mixes refactoring with behavior changes. `--diff` simplifies only the current working diff as a pre-commit polish pass. |
 | `/test-writer` | *(auto-triggers)* | Writes comprehensive tests for new or changed code. Discovers changes via `git diff`, maps all code paths (happy, edge, error, concurrency), writes one test per scenario with Arrange-Act-Assert. The only skill that can auto-trigger. Claude may invoke it after you add new features. |
 | `/context-budget` | `[--api]` | Estimates per-turn token cost of this project's `.claude/` and `CLAUDE.md`. Reports always-loaded vs path-scoped vs invoked-only, ranks top contributors, flags entries over budget. Default heuristic is `chars/4`. Add `--api` for Anthropic-tokenizer exact counts (requires `$ANTHROPIC_API_KEY`). |
+| `/onboard` | `[focus area]` | Gets you oriented in an unfamiliar codebase fast. Dispatches Explore subagents broad-to-narrow (overview, architecture, data models, auth, conventions) and synthesizes a scannable onboarding brief with `file:path` pointers and a glossary — keeping the file reads out of your main context. |
+| `/spec` | `[feature description]` | Turns a fuzzy feature idea into a self-contained `SPEC.md`. Explores the code, interviews you with AskUserQuestion (scope, behavior, edge cases, verification), then writes a spec a fresh implementation session can execute. |
 
 ## Agents (subagents)
 
@@ -257,3 +262,9 @@ Built from research across:
 ## License
 
 MIT. Use it, fork it, adapt it, share it. See [LICENSE](LICENSE).
+
+## Privacy, security & contributing
+
+- **Privacy** — dotclaude collects nothing: no telemetry, no servers, everything runs locally. See [PRIVACY.md](PRIVACY.md).
+- **Security** — found a vulnerability? See [SECURITY.md](SECURITY.md).
+- **Contributing** — PRs welcome; conventions and the hook-fixture requirement are in [CONTRIBUTING.md](CONTRIBUTING.md).

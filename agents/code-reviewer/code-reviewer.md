@@ -90,3 +90,12 @@ For each finding:
 End with a brief overall assessment: what's solid, what needs work, the single most important fix.
 
 Either way, apply the ≥80 confidence filter internally and drop findings below it.
+
+**Final status line (both modes)**
+
+After the human summary sentence, always emit one fixed, greppable last line — nothing after it:
+
+- Zero findings: `REVIEW: PASS`
+- One or more findings: `REVIEW: CHANGES-REQUESTED (<n> findings, top: <file:line>)`
+
+where `<n>` is the count of post-filter findings and `<file:line>` is the most important one's location. This lets a Stop hook or CI grep a single token to close the loop.

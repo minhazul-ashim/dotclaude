@@ -19,10 +19,19 @@ Two modes. `$ARGUMENTS` containing `handoff` → write the handoff note (end of 
 Rebuild context in four steps, cheapest first. Read; never modify anything.
 
 1. **Handoff note**: if `.claude/HANDOFF.md` exists, read it first — it's the previous session's intent and beats anything inferable from git. Note its date; flag if it predates the latest commit (it may be stale).
-2. **Branch state**:
-   - `git status` — uncommitted/staged work in flight
-   - `git log --oneline $(git merge-base HEAD origin/HEAD 2>/dev/null || echo HEAD~10)..HEAD` — what this branch did
-   - `git diff --stat $(git merge-base HEAD origin/HEAD 2>/dev/null || echo HEAD~10)..HEAD` — where the change mass is
+2. **Branch state** — live snapshot injected below (git output as of this session's start; no need to re-run these three):
+
+```!
+BASE=$(git merge-base HEAD origin/HEAD 2>/dev/null || echo HEAD~10)
+echo "### git status (uncommitted/staged work in flight)"
+git status --short 2>/dev/null || echo "(not a git repo)"
+echo
+echo "### git log --oneline ${BASE}..HEAD (what this branch did)"
+git log --oneline "${BASE}..HEAD" 2>/dev/null || echo "(no divergence from base)"
+echo
+echo "### git diff --stat ${BASE}..HEAD (where the change mass is)"
+git diff --stat "${BASE}..HEAD" 2>/dev/null || echo "(no diff vs base)"
+```
 3. **Read the changed files** — the diff hunks, not whole files. If more than ~15 files changed, read the 5 with the most churn plus anything matching the focus area, and list the rest by name.
 4. **Summarize** in this shape, terse:
 

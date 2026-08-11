@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Scan changes, commit, push, and create a PR. With confirmation at each step
+description: Commit, push, and create a PR for staged changes, with confirmation at each step. Use when your work is done and you want to ship.
 argument-hint: "[optional commit message or PR title]"
 disable-model-invocation: true
 allowed-tools:
@@ -22,9 +22,14 @@ Ship the current changes through commit, push, and PR creation. Confirm with the
 
 ## Step 1: Scan
 
-- Run `git status` to see all changed, staged, and untracked files
-- Run `git diff` to see what changed (staged + unstaged)
-- Run `git log --oneline -5` to see recent commit style
+Current scan state (injected read-only below — no need to re-run these to gather it):
+
+- Status: !`git -C "${CLAUDE_PROJECT_DIR:-.}" status --short 2>/dev/null || echo "(no git repo or no changes)"`
+- Change summary: !`git -C "${CLAUDE_PROJECT_DIR:-.}" diff --stat HEAD 2>/dev/null || echo "(no diff)"`
+- Recent commit style: !`git -C "${CLAUDE_PROJECT_DIR:-.}" log --oneline -5 2>/dev/null || echo "(no commits yet)"`
+
+For the full patch of a specific file before committing, run `git diff -- <file>` on demand (kept out of the injection to hold the render small).
+
 - Present a clear summary to the user:
   - Files modified
   - Files added

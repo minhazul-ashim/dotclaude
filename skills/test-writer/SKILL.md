@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Write comprehensive tests for new or changed code. Use automatically after adding a function, endpoint, or component, or changing behavior, when the change has no corresponding test changes. Not for config, docs, or test-only diffs.
+description: Write comprehensive tests for new or changed code. Use automatically after adding a function, endpoint, or component, or changing behavior, when the change has no corresponding test changes. Not for config, docs, or test-only diffs. For judging whether existing tests adequately verify a change, use the pr-test-analyzer agent instead.
 # No disable-model-invocation. Claude can auto-trigger this when adding features.
 # Add "disable-model-invocation: true" below if you prefer manual-only via /test-writer.
 allowed-tools:
@@ -15,7 +15,17 @@ Write comprehensive tests for the code that was just added or changed.
 
 ## Step 1: Discover What Changed
 
-- Check `git diff` and `git diff --cached` to identify new/modified functions, classes, and modules
+Change under test (injected at load — already in front of you, no tool call needed):
+
+```!
+git diff --stat HEAD 2>/dev/null || echo "(no diff vs HEAD — inspect git status manually)"
+```
+
+```!
+git diff HEAD 2>/dev/null || true
+```
+
+- The diff above is the change under test. If it is empty (already committed or amended elsewhere), run `git diff`, `git diff --cached`, or `git show HEAD` to locate the change
 - Read each changed file to understand the behavior being added
 - Identify the project's existing test framework, patterns, and conventions by finding existing test files
 - Place new test files next to the source files or in the project's established test directory. Match whatever the project already does
