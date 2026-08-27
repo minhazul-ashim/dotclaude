@@ -67,6 +67,16 @@ Writes comprehensive tests covering every code path: happy path, edge cases, nul
 
 Estimates the per-turn token cost of this project's `.claude/` configuration and `CLAUDE.md`. Reports always-loaded files (rules without `paths:` plus `CLAUDE.md`), path-scoped rules, and invoked-only agents and skills. Ranks the top contributors and flags entries over budget. Default uses Anthropic's documented `chars/4` heuristic. Add `--api` to call Anthropic's `count_tokens` endpoint for exact counts (requires `$ANTHROPIC_API_KEY`).
 
+### /onboard [optional focus area]
+**Trigger**: Manual only
+
+Gets you oriented in an unfamiliar codebase fast. Dispatches Explore subagents to survey the project broad-to-narrow — overview, architecture, data models, auth, conventions — and synthesizes a scannable onboarding brief with `file:path` pointers and a glossary, keeping the file reads out of your main context.
+
+### /spec [optional feature description]
+**Trigger**: Manual only
+
+Turns a fuzzy feature idea into a self-contained `SPEC.md`. Explores the codebase, interviews you with AskUserQuestion about scope, behavior, edge cases, and verification, then writes a spec (named files, out-of-scope, end-to-end check) that a fresh implementation session can execute.
+
 ## Adding your own
 
 Create a directory with a `SKILL.md` file:

@@ -10,6 +10,31 @@ if ! command -v jq >/dev/null 2>&1; then
   exit 0
 fi
 
+# Emit failing-test output, capped so one broad failure (or a whole-suite runner
+# like `go test ./...` / `cargo test`) can't flood the conversation context.
+emit_test_failures() {
+  echo "auto-test: failures in $REL_TEST"
+  local total
+  total=$(printf '%s\n' "$OUTPUT" | wc -l | tr -d ' ')
+  if [ "$total" -gt 60 ]; then
+    printf '%s\n' "$OUTPUT" | tail -n 60
+    echo "(output truncated — $((total - 60)) earlier lines hidden; run the test file directly for full logs)"
+  else
+    printf '%s\n' "$OUTPUT"
+  fi
+}
+
+# Test seam: fixtures set DOTCLAUDE_AUTOTEST_FAKE_LINES to exercise the failure
+# emit + truncation path hermetically, since language test runners aren't
+# installed in every CI environment. Mirrors the DRYRUN/FINGERPRINT seams in the
+# sibling hooks. Never set in normal use.
+if [ -n "${DOTCLAUDE_AUTOTEST_FAKE_LINES:-}" ]; then
+  REL_TEST="fake/synthetic_test"
+  OUTPUT=$(seq 1 "$DOTCLAUDE_AUTOTEST_FAKE_LINES" 2>/dev/null | sed 's/^/FAIL line /')
+  emit_test_failures
+  exit 0
+fi
+
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
@@ -141,8 +166,7 @@ case "$EXTENSION" in
 esac
 
 if [ "$EXIT" -ne 0 ]; then
-  echo "auto-test: failures in $REL_TEST"
-  echo "$OUTPUT"
+  emit_test_failures
 fi
 
 exit 0

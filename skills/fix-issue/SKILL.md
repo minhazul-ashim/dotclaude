@@ -17,7 +17,11 @@ Work a GitHub issue end to end. `$ARGUMENTS` is the issue number or URL; if omit
 
 ## Step 1: Understand the issue
 
-- `gh issue view $NUMBER --comments` — read the body AND the discussion; the real spec is often in comment 7.
+The live issue thread (or your open assigned issues, when no number was given) is injected below — no need to fetch it again:
+
+!`gh issue view $ARGUMENTS --comments 2>/dev/null || gh issue list --assignee @me --state open 2>/dev/null || echo "(no issue arg — paste the issue details)"`
+
+- The thread above is the real spec — read the body AND the discussion; the decision that changes the fix is often in comment 7.
 - Extract: expected behavior, actual behavior, reproduction steps, acceptance criteria, and any decisions already made in the thread.
 - If the issue is ambiguous on something that changes the fix (which behavior is correct? which platform?), ask the user — do NOT guess and do NOT ask in the issue thread without being told to.
 

@@ -22,35 +22,11 @@ Before writing frontend code, find the project's existing tokens file (`tokens.c
 
 Required token categories: colors (semantic names with dark mode variants), spacing scale, border radius, shadows (elevation system), typography (display + body + mono fonts, type scale, weights), breakpoints, transitions (durations + easing), z-index scale.
 
-## Design Principles
+## Design principle & libraries
 
-Pick one primary principle. Don't mix randomly.
+Pick one design principle and stick to it — don't mix randomly. Use whatever CSS approach, component primitives, animation, and icon libraries the project already has; never introduce a competing one.
 
-| Principle | When to use |
-|---|---|
-| **Glassmorphism** | Overlays, modern dashboards |
-| **Neumorphism** | Settings panels, minimal controls |
-| **Brutalism** | Developer tools, editorial sites |
-| **Minimalism** | Portfolios, documentation, content-first |
-| **Maximalism** | Creative agencies, e-commerce |
-| **Claymorphism** | Playful apps, onboarding |
-| **Bento Grid** | Dashboards, feature showcases |
-| **Aurora / Mesh Gradients** | Landing pages, hero sections |
-| **Flat Design** | Mobile apps, system UI |
-| **Material Elevation** | Data-heavy apps, enterprise |
-| **Editorial** | Blogs, long-form content |
-
-## Component Framework
-
-Use whatever the project already has. Don't mix competing libraries.
-
-| Category | Options (pick one) |
-|---|---|
-| CSS | Tailwind, vanilla CSS, CSS Modules, styled-components, Emotion, UnoCSS, Panda CSS |
-| Primitives | shadcn/ui, Radix, Headless UI, Ark UI, DaisyUI, Mantine, Chakra, Vuetify |
-| Animation | CSS transitions, Framer Motion, GSAP, View Transitions API, AutoAnimate |
-| Charts | Recharts, D3, Chart.js, Visx, ECharts, Nivo |
-| Icons | Lucide, Phosphor, Heroicons, Tabler Icons, Iconify |
+For the full design doctrine — the principle catalog, typography, color, backgrounds, and motion guidance — invoke the **frontend-designer** agent, which owns it. This rule stays scoped to the always-apply constraints below.
 
 ## Layout
 

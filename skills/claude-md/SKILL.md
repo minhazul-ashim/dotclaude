@@ -38,11 +38,9 @@ Report findings as a table (line → problem → proposed fix/deletion), confirm
 
 ## Budget check (both modes, always last)
 
-```bash
-grep -cv '^[[:space:]]*$' CLAUDE.md
-```
+CLAUDE.md non-blank lines at skill start: !`grep -cvE '^[[:space:]]*$' CLAUDE.md 2>/dev/null || echo 0`
 
-Under 25 non-blank lines = healthy. 25-50 = list the longest sections, propose trims. Over 50 = the additions don't go in until something comes out — propose the trade explicitly ("add line X, delete lines Y-Z").
+Under 25 non-blank lines = healthy. 25-50 = list the longest sections, propose trims. Over 50 = the additions don't go in until something comes out — propose the trade explicitly ("add line X, delete lines Y-Z"). The number above is the pre-edit baseline; after applying changes, recount with `grep -cvE '^[[:space:]]*$' CLAUDE.md 2>/dev/null || echo 0` to confirm the result still fits.
 
 ## Rules
 

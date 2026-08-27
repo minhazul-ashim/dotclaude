@@ -73,3 +73,13 @@ Raw colors or spacing in components. Inter, Roboto, Arial as display fonts. Purp
 ## Output
 
 Always deliver: tokens first (create or update if needed). Complete code, not snippets, with all imports, ready to run. A one-paragraph design rationale (principle plus what makes it distinctive). Responsive without additional prompting. Dark mode if the project supports it (both themes via tokens).
+
+## Self-check before you stop
+
+After writing, verify your own output with the tools you already have, report a short checklist (pass/fail per item), and fix any failure before stopping:
+
+1. **No raw colors in components.** `grep -REn '#[0-9a-fA-F]{3,8}\b|rgba?\(' <files-you-wrote>` excluding the token/theme file(s). Any hit outside tokens is a failure — move it to a token.
+2. **Motion respects reduced-motion.** If you added animation, `grep -rn 'prefers-reduced-motion' <files-you-wrote>` must be non-empty. An empty result after adding motion is a failure.
+3. **Focus stays visible.** `grep -REn 'outline:\s*(none|0)' <files-you-wrote>` must be empty, or every hit must be paired with a replacement `:focus`/`:focus-visible` style.
+
+Report the checklist, apply fixes for any failure, then stop.

@@ -23,12 +23,7 @@ npm run dev              # start dev server
 
 ## Architecture
 
-> REPLACE: Describe non-obvious architectural decisions. Don't list files; Claude can explore.
-
-- `src/`. Application source.
-- `src/api/`. REST endpoints (versioned: `/v1/`).
-- `src/services/`. Business logic (no direct DB access from controllers).
-- `src/models/`. Data models and types.
+> REPLACE: Describe non-obvious architectural decisions and boundaries — e.g. "controllers never touch the DB directly, go through services"; "billing is a separate module for audit independence". Don't list files or directories; Claude can explore those.
 
 ## Key Decisions
 
@@ -38,12 +33,10 @@ npm run dev              # start dev server
 
 > REPLACE: Terms, abbreviations, or concepts that aren't obvious from the code. Example: "SKU" = Stock Keeping Unit, the unique product identifier from our warehouse system.
 
-## Workflow
+## Imports (optional)
 
-- Run typecheck after making a series of code changes
-- Prefer fixing the root cause over adding workarounds
-- When unsure about approach, use plan mode (`Shift+Tab`) before coding
+> REPLACE or delete: pull files into context instead of restating them — `@README.md` for the overview, `@package.json` for scripts, `@CLAUDE.local.md` for your gitignored personal notes. Each `@path` inlines that file when this CLAUDE.md loads.
 
 ## Don'ts
 
-- Don't modify generated files (`*.gen.ts`, `*.generated.*`)
+> REPLACE: Project-specific traps only. Generated files, secrets, and lock files are already blocked by the safety hooks — don't restate hook-enforced rules here.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "fix-issue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Take a GitHub issue from number to tested fix: read the thread, reproduce, fix with a regression test, prep a PR that closes it.",
   "author": {
     "name": "poshan0126"

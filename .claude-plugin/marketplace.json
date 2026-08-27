@@ -5,8 +5,8 @@
     "name": "poshan0126",
     "email": "poshan0126@gmail.com"
   },
-  "description": "Lean, token-efficient agents, skills, and safety hooks for daily Claude Code development. Install the whole kit with setupdotclaude, or pick individual plugins.",
-  "version": "2.0.0",
+  "description": "Lean, token-efficient agents, skills, and safety hooks for daily Claude Code development. Install the whole kit with setupdotclaude, or pick individual plugins. No telemetry; runs entirely locally.",
+  "version": "2.1.0",
   "plugins": [
     {
       "name": "code-reviewer",
@@ -348,6 +348,40 @@
         "github",
         "issues",
         "bugfix"
+      ]
+    },
+    {
+      "name": "onboard",
+      "source": "./plugins/onboard",
+      "description": "Get oriented in an unfamiliar codebase fast: an Explore-subagent tour from overview down to architecture, data models, auth, conventions, and a glossary, without flooding your main context.",
+      "author": {
+        "name": "poshan0126"
+      },
+      "license": "MIT",
+      "homepage": "https://github.com/poshan0126/dotclaude",
+      "repository": "https://github.com/poshan0126/dotclaude",
+      "category": "productivity",
+      "keywords": [
+        "onboarding",
+        "codebase",
+        "explore"
+      ]
+    },
+    {
+      "name": "spec",
+      "source": "./plugins/spec",
+      "description": "Turn a fuzzy feature idea into a self-contained SPEC.md by interviewing you first, then writing a spec a fresh implementation session can execute.",
+      "author": {
+        "name": "poshan0126"
+      },
+      "license": "MIT",
+      "homepage": "https://github.com/poshan0126/dotclaude",
+      "repository": "https://github.com/poshan0126/dotclaude",
+      "category": "workflow",
+      "keywords": [
+        "spec",
+        "planning",
+        "requirements"
       ]
     }
   ]
